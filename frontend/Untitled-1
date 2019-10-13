@@ -1,0 +1,161 @@
+import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+ 
+
+class ResourceManager extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      columns: [{ "header": "ID", "name": "id" },
+      { "header": "NAME", "name": "name" },
+      { "header": "Start Date","name": "startDate" },
+      { "header": "End Date", "name": "endDate" }],
+      showAdd: false,
+      showUpdate: false,
+      showDelete: false,
+      showRM:true,
+      name: null,
+      startDate: null,
+      endDate: null
+    }
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+  }
+  handleAdd(event) {
+    this.setState({
+      showAdd: true,
+      showDelete: false,
+      showUpdate: false
+    })
+  }
+
+  handleUpdate(event) {
+    this.setState({
+      showUpdate: true
+    })
+  }
+
+  handleDelete(event) {
+    this.setState({
+      showDelete: true
+    })
+  }
+
+  handleClose(event) {
+    this.setState({
+      showUpdate: false,
+      showDelete: false,
+      showAdd: false
+    })
+  }
+
+  render() {
+    console.log(this.props);
+    return (
+      <div>
+        <table>
+          <thead>
+            <tr>
+              {this.state.columns.map(col =>
+                <th key={col.name}>{col.header}</th>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.rows.map(row =>
+              <tr key={row.id}>
+                {this.state.columns.map(col =>
+                  <td key={col.name}>{row[col.name]}</td>
+                )}
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <Button variant="inherit" onClick={this.handleAdd}>
+          Add
+            </Button>
+        <Button variant="primary" onClick={this.handleUpdate}>
+          Update
+            </Button>
+        <Button variant="secondary" onClick={this.handleDelete}>
+          Delete
+            </Button>
+        <Modal show={this.state.showAdd} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Add New Resource Manager</Modal.Title>
+          </Modal.Header>
+          <form onSubmit={this.handleSubmit}>
+            <Modal.Body>
+              <label For="name">Name</label>
+              <input id="name" name="name" type="text" onChange={this.onChange} value={this.state.name} />
+              <label for="startDate">Start Date</label>
+              <input type="date" id="startDate" class="form-control" onChange={this.onChange} value={this.state.endDate} />
+              <label For="endDate">End Date</label>
+              <input type="date" id="startDate" class="form-control" onChange={this.onChange} value={this.state.endDate} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+                </Button>
+              <Button type="submit" variant="primary" >
+                Submit
+                </Button>
+            </Modal.Footer>
+          </form>
+        </Modal>
+
+
+        <Modal show={this.state.showUpdate} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Update Resource Manager</Modal.Title>
+          </Modal.Header>
+          <form onSubmit={this.handleSubmit}>
+            <Modal.Body>
+              <label For="id">ID</label>
+              <input id="id" name="id" type="number" onChange={this.onChange} value={this.state.name} />
+              <label For="name">Name</label>
+              <input id="name" name="name" type="text" onChange={this.onChange} value={this.state.name} />
+              <label for="startDate">Start Date</label>
+              <input type="date" id="startDate" class="form-control" onChange={this.onChange} value={this.state.endDate} />
+              <label For="endDate">End Date</label>
+              <input type="date" id="startDate" class="form-control" onChange={this.onChange} value={this.state.endDate} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+                </Button>
+              <Button type="submit" variant="primary" >
+                Submit
+                </Button>
+            </Modal.Footer>
+          </form>
+        </Modal>
+        <Modal show={this.state.showDelete} onHide={this.handleClose}>
+          <Modal.Header>
+            <Modal.Title>Delete New Resource Manager</Modal.Title>
+          </Modal.Header>
+          <form onSubmit={this.handleSubmit}>
+            <Modal.Body>
+              <label For="ID">ID</label>
+              <input id="ID" type="text" onChange={this.onChange} value={this.state.name} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleClose}>
+                Close
+                </Button>
+              <Button type="submit" variant="primary" >
+                Submit
+                </Button>
+            </Modal.Footer>
+          </form>
+          </Modal>
+        </div>
+        );
+    }
+}
+
+export default ResourceManager;
